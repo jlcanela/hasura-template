@@ -6,7 +6,8 @@ This project sets up a Hasura GraphQL Engine with a PostgreSQL database using Do
 
 - Docker
 - Docker Compose
-- Bash shell (for running the create-env.sh script)
+- Bash shell (for running the ./scripts/init.sh script)
+- [Hasura Cli](https://hasura.io/docs/2.0/hasura-cli/install-hasura-cli/) 
 
 ## Setup Instructions
 
@@ -16,26 +17,47 @@ This project sets up a Hasura GraphQL Engine with a PostgreSQL database using Do
    cd <repository-directory>
    ```
 
-2. Generate the .env file:
+2. Install the backend
    ```
-   ./create-env.sh
+   ./install.sh
    ```
-   This script will create a .env file with random, secure passwords for sensitive fields.
+   This script will create a .env file with random, secure passwords for sensitive fields initialize the default postgres connection and apply migrations.
 
-3. Start the services:
-   ```
-   docker-compose up -d
-   ```
-
-4. Access the Hasura console:
+3. Access the Hasura console:
    Open a web browser and navigate to `http://localhost:8080`. You'll need to use the HASURA_GRAPHQL_ADMIN_SECRET generated in the .env file to access the console.
+
+
+## Reset Instructions
+
+To clean and reset the database
+
+1. Wipe the database
+   ```
+   ./reset.sh
+   ```
+   This script will shutdown the docker compose and delete the postgres docker volume and then restart and apply migrations. 
+   
 
 ## File Structure
 
+The configuration:
 - `docker-compose.yml`: Defines the services (PostgreSQL and Hasura GraphQL Engine).
-- `.env-template`: Template file for environment variables.
-- `create-env.sh`: Script to generate a .env file with random passwords.
-- `.env`: (Generated) Contains actual environment variables and passwords.
+- `scripts/.env-template`: Template file for environment variables.
+- `scripts/.default_metadata.json`: Default metadata configuration for Hasura, including the default PostgreSQL connection.
+
+The setup scripts
+- `./install.sh`: Main installation script that orchestrates the entire setup process.
+- `scripts/apply_migrations.sh`: Applies database migrations to set up the schema.
+- `scripts/configure.sh`: Generates the .env file with secure random passwords.
+- `scripts/setup_db.sh`: Initializes the database connection in Hasura using the default metadata.
+- `scripts/start.sh`: Starts the Docker containers for PostgreSQL and Hasura.
+- `scripts/wait.sh`: Waits for the Hasura container to be healthy before proceeding.
+
+The developer scripts
+- `./reset.sh`: Resets the entire setup by wiping the database and reapplying migrations.
+- `scripts/backup.sh`: Creates a backup of the current database schema and Hasura metadata.
+- `scripts/restore.sh`: Restores the database and Hasura configuration from a backup.
+- `scripts/wipe.sh`: Removes all data from the PostgreSQL database.
 
 ## Environment Variables
 
@@ -43,6 +65,7 @@ This project sets up a Hasura GraphQL Engine with a PostgreSQL database using Do
 - `HASURA_GRAPHQL_ENABLE_CONSOLE`: Enables the Hasura console.
 - `HASURA_GRAPHQL_DEV_MODE`: Enables development mode for Hasura.
 - `HASURA_GRAPHQL_ADMIN_SECRET`: Admin secret for accessing the Hasura console and API.
+- `HASURA_ENDPOINT`: The URL where the Hasura GraphQL engine is accessible, typically "http://localhost:8080".
 
 ## Security Notes
 
@@ -52,7 +75,7 @@ This project sets up a Hasura GraphQL Engine with a PostgreSQL database using Do
 
 ## Customization
 
-You can modify the .env-template file to add or remove environment variables as needed for your project. Remember to update the create-env.sh script accordingly if you add new sensitive fields that require random generation.
+You can modify the .env-template file to add or remove environment variables as needed for your project. Remember to update the ./scripts/configure.sh script accordingly if you add new sensitive fields that require random generation.
 
 ## Troubleshooting
 
