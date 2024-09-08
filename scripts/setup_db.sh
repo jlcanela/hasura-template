@@ -6,12 +6,13 @@ PROJECT_ROOT=$(pwd)
 METADATA_FILE="$PROJECT_ROOT/scripts/default_metadata.json"
 
 # Read environment variables
-if [ -f "$PROJECT_ROOT/.env" ]; then
-    export $(grep -v '^#' "$PROJECT_ROOT/.env" | xargs)
-else
-    echo ".env file not found in project root. Please create one with HASURA_GRAPHQL_ADMIN_SECRET."
-    exit 1
-fi
+dotenv() {
+    set -a
+    [ -f .env ] && . .env
+    set +a
+}
+
+dotenv
 
 # Restore Hasura metadata
 echo "Restoring/Replacing Hasura metadata..."

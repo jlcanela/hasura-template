@@ -7,12 +7,13 @@ BACKUP_DIR="$PROJECT_ROOT/backups"
 DATE=$(date +"%Y%m%d_%H%M%S")
 
 # Read environment variables
-if [ -f "$PROJECT_ROOT/.env" ]; then
-    export $(grep -v '^#' "$PROJECT_ROOT/.env" | xargs)
-else
-    echo ".env file not found in project root. Please run init.sh first."
-    exit 1
-fi
+dotenv() {
+    set -a
+    [ -f .env ] && . .env
+    set +a
+}
+
+dotenv
 
 # Create backup directory if it doesn't exist
 mkdir -p "$BACKUP_DIR"

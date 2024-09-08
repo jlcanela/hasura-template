@@ -4,12 +4,13 @@
 PROJECT_ROOT=$(pwd)
 
 # Read environment variables
-if [ -f "$PROJECT_ROOT/.env" ]; then
-    export $(grep -v '^#' "$PROJECT_ROOT/.env" | xargs)
-else
-    echo ".env file not found in project root. Please run init.sh first."
-    exit 1
-fi
+dotenv() {
+    set -a
+    [ -f .env ] && . .env
+    set +a
+}
+
+dotenv
 
 # Apply the migration
 echo "Applying migration..."

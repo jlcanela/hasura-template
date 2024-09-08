@@ -6,12 +6,13 @@ SCRIPTS_DIR="$PROJECT_ROOT/scripts"
 BACKUP_DIR="$PROJECT_ROOT/backups"
 
 # Read environment variables
-if [ -f "$PROJECT_ROOT/.env" ]; then
-    export $(grep -v '^#' "$PROJECT_ROOT/.env" | xargs)
-else
-    echo ".env file not found in project root. Please run init.sh first."
-    exit 1
-fi
+dotenv() {
+    set -a
+    [ -f .env ] && . .env
+    set +a
+}
+
+dotenv
 
 # Function to get the latest file with a specific prefix
 get_latest_file() {
