@@ -19,7 +19,7 @@ CREATE TABLE projects (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT,
-    status TEXT REFERENCES project_status(value),
+    status TEXT REFERENCES project_status(value) DEFAULT 'NotStarted',
     start_date DATE,
     end_date DATE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,

@@ -26,6 +26,10 @@ This project sets up a Hasura GraphQL Engine with a PostgreSQL database using Do
 3. Access the Hasura console:
    Open a web browser and navigate to `http://localhost:8080`. You'll need to use the HASURA_GRAPHQL_ADMIN_SECRET generated in the .env file to access the console.
 
+## (Optional) Configure Auth0 JWT for Hasura
+
+1. Generate JWT Config using https://hasura.io/jwt-config/
+2. Update HASURA_GRAPHQL_JWT_SECRET in .env file
 
 ## Reset Instructions
 
