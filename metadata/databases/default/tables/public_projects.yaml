@@ -8,6 +8,14 @@ object_relationships:
   - name: project_status
     using:
       foreign_key_constraint_on: status
+array_relationships:
+  - name: project_assignments
+    using:
+      foreign_key_constraint_on:
+        column: project_id
+        table:
+          name: project_assignments
+          schema: public
 insert_permissions:
   - role: Player
     permission:

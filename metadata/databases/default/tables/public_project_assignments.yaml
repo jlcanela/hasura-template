@@ -1,0 +1,31 @@
+table:
+  name: project_assignments
+  schema: public
+object_relationships:
+  - name: party_role
+    using:
+      foreign_key_constraint_on: party_role_id
+  - name: project
+    using:
+      foreign_key_constraint_on: project_id
+insert_permissions:
+  - role: Player
+    permission:
+      check: {}
+      columns:
+        - party_role_id
+        - project_id
+    comment: ""
+select_permissions:
+  - role: Player
+    permission:
+      columns:
+        - party_role_id
+        - project_id
+      filter: {}
+    comment: ""
+delete_permissions:
+  - role: Player
+    permission:
+      filter: {}
+    comment: ""

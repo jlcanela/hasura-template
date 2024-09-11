@@ -1,5 +1,6 @@
 - "!include identity_parties.yaml"
 - "!include identity_party_roles.yaml"
 - "!include identity_role_type.yaml"
+- "!include public_project_assignments.yaml"
 - "!include public_project_status.yaml"
 - "!include public_projects.yaml"

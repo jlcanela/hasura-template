@@ -100,8 +100,30 @@ CREATE TABLE projects (
     owner INTEGER REFERENCES "identity"."parties"("party_id")
 );
 
+
 -- Create trigger for projects table
 CREATE TRIGGER update_project_updated_at
 BEFORE UPDATE ON projects
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at_column();
+
+-- Create the project assignment table
+CREATE TABLE project_assignments (
+    project_id INTEGER NOT NULL,
+    party_role_id INTEGER NOT NULL,
+    FOREIGN KEY (project_id) 
+        REFERENCES projects (id) 
+        ON UPDATE CASCADE 
+        ON DELETE CASCADE,
+    FOREIGN KEY (party_role_id) 
+        REFERENCES identity.party_roles (party_role_id) 
+        ON UPDATE CASCADE 
+        ON DELETE CASCADE,
+    PRIMARY KEY (project_id, party_role_id)
+);
+
+-- Create a trigger to update the updated_at column
+CREATE TRIGGER update_project_assignments_updated_at
+BEFORE UPDATE ON project_assignments
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at_column();
