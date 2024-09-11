@@ -1,3 +1,49 @@
 table:
   name: projects
   schema: public
+object_relationships:
+  - name: project_status
+    using:
+      foreign_key_constraint_on: status
+insert_permissions:
+  - role: Player
+    permission:
+      check: {}
+      columns:
+        - description
+        - end_date
+        - name
+        - start_date
+        - status
+    comment: ""
+select_permissions:
+  - role: Player
+    permission:
+      columns:
+        - end_date
+        - start_date
+        - id
+        - description
+        - name
+        - status
+        - created_at
+        - updated_at
+      filter: {}
+    comment: ""
+update_permissions:
+  - role: Player
+    permission:
+      columns:
+        - description
+        - end_date
+        - name
+        - start_date
+        - status
+      filter: {}
+      check: {}
+    comment: ""
+delete_permissions:
+  - role: Player
+    permission:
+      filter: {}
+    comment: ""

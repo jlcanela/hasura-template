@@ -2,3 +2,19 @@ table:
   name: project_status
   schema: public
 is_enum: true
+array_relationships:
+  - name: projects
+    using:
+      foreign_key_constraint_on:
+        column: status
+        table:
+          name: projects
+          schema: public
+select_permissions:
+  - role: Player
+    permission:
+      columns:
+        - description
+        - value
+      filter: {}
+    comment: ""
