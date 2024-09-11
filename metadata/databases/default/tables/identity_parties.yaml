@@ -9,6 +9,19 @@ array_relationships:
         table:
           name: party_roles
           schema: identity
+  - name: projects
+    using:
+      foreign_key_constraint_on:
+        column: owner
+        table:
+          name: projects
+          schema: public
+computed_fields:
+  - name: name
+    definition:
+      function:
+        name: party_full_name
+        schema: identity
 select_permissions:
   - role: Player
     permission:
@@ -17,6 +30,8 @@ select_permissions:
         - first_name
         - idp_id
         - last_name
+      computed_fields:
+        - name
       filter: {}
     comment: ""
 update_permissions:
