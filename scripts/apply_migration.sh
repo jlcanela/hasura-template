@@ -19,5 +19,6 @@ hasura migrate apply --database-name default --endpoint "$HASURA_ENDPOINT" --adm
 # Reload metadata to reflect the changes
 echo "Reloading metadata..."
 hasura metadata apply --endpoint "$HASURA_ENDPOINT" --admin-secret "$HASURA_GRAPHQL_ADMIN_SECRET"
+hasura seed apply --endpoint "$HASURA_ENDPOINT" --admin-secret "$HASURA_GRAPHQL_ADMIN_SECRET" --database-name default
 
 echo "Migration applied and metadata reloaded."

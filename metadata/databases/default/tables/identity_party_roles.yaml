@@ -1,0 +1,34 @@
+table:
+  name: party_roles
+  schema: identity
+object_relationships:
+  - name: party
+    using:
+      foreign_key_constraint_on: party_id
+  - name: role_type
+    using:
+      foreign_key_constraint_on: role_type_id
+insert_permissions:
+  - role: Player
+    permission:
+      check:
+        role_type_id:
+          _neq: Administrator
+      columns:
+        - party_id
+        - party_role_id
+        - role_type_id
+    comment: ""
+select_permissions:
+  - role: Player
+    permission:
+      columns: []
+      filter: {}
+    comment: ""
+delete_permissions:
+  - role: Player
+    permission:
+      filter:
+        role_type_id:
+          _neq: Administrator
+    comment: ""

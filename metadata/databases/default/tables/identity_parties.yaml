@@ -1,0 +1,31 @@
+table:
+  name: parties
+  schema: identity
+array_relationships:
+  - name: party_roles
+    using:
+      foreign_key_constraint_on:
+        column: party_id
+        table:
+          name: party_roles
+          schema: identity
+select_permissions:
+  - role: Player
+    permission:
+      columns:
+        - party_id
+        - first_name
+        - idp_id
+        - last_name
+      filter: {}
+    comment: ""
+update_permissions:
+  - role: Player
+    permission:
+      columns:
+        - first_name
+        - last_name
+        - party_id
+      filter: {}
+      check: null
+    comment: ""

@@ -1,0 +1,20 @@
+table:
+  name: role_type
+  schema: identity
+is_enum: true
+array_relationships:
+  - name: party_roles
+    using:
+      foreign_key_constraint_on:
+        column: role_type_id
+        table:
+          name: party_roles
+          schema: identity
+select_permissions:
+  - role: Player
+    permission:
+      columns:
+        - description
+        - value
+      filter: {}
+    comment: ""
